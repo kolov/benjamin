@@ -6,8 +6,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
 
+    private String id;
     private String key;
     private String name;
+    private String sc;
+    private String qualifier;
+
+
+    public String getId() {
+        return id;
+    }
 
     @JsonProperty("sc")
     public String getSc() {
@@ -18,9 +26,6 @@ public class Project {
     public String getQualifier() {
         return qualifier;
     }
-
-    private String sc;
-    private String qualifier;
 
     @JsonProperty("k")
     public String getKey() {
