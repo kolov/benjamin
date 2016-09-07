@@ -1,0 +1,74 @@
+{
+  "paging": {
+    "pageIndex": 1,
+    "pageSize": 100,
+    "total": 2
+  },
+  "baseComponent": {
+    "id": "AVR209gARTZF0iqfTUWd",
+    "key": "benjamin:benjamin",
+    "name": "benjamin",
+    "description": "Benjamin the Librarian",
+    "qualifier": "TRK",
+    "measures": [
+      {
+        "metric": "complexity",
+        "value": "59"
+      },
+      {
+        "metric": "ncloc",
+        "value": "741"
+      },
+      {
+        "metric": "violations",
+        "value": "24"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "AVR2098GRTZF0iqfTUWk",
+      "key": "benjamin:mockserver",
+      "name": "mockserver",
+      "description": "Benjamin the Librarian",
+      "qualifier": "BRC",
+      "path": "mockserver",
+      "measures": [
+        {
+          "metric": "complexity",
+          "value": "1"
+        },
+        {
+          "metric": "ncloc",
+          "value": "14"
+        },
+        {
+          "metric": "violations",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "AVR2098wRTZF0iqfTUXQ",
+      "key": "benjamin:web",
+      "name": "web",
+      "description": "Benjamin the Librarian",
+      "qualifier": "BRC",
+      "path": "web",
+      "measures": [
+        {
+          "metric": "complexity",
+          "value": "58"
+        },
+        {
+          "metric": "ncloc",
+          "value": "727"
+        },
+        {
+          "metric": "violations",
+          "value": "23"
+        }
+      ]
+    }
+  ]
+}

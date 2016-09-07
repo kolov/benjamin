@@ -1,0 +1,27 @@
+<div>
+
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="row">
+                <h3>Filter</h3>
+            </div>
+            <div class="row">
+                <b>Labels</b>
+                <input ng-model="filterString">
+            </div>
+            <div class="row" style="height: 90px;">
+                <b>Metrics</b>
+                <div ng-repeat="m in metrics" >
+                    <input type="checkbox" ng-model="m.selected">{{m.name}}
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="row">
+                <h3>Reports</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+  

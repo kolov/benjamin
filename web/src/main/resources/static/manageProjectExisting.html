@@ -1,0 +1,118 @@
+<div class=row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit existing roles of users of project {{projectId}}
+                <a ui-sref="manageProjectNew({projectId: projectId})">
+                    <button ng-show="isAdminForProject" class="btn navbar-btn">Add new users</button>
+                </a>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-1">
+                </div>
+                <div class="col-xs-1">
+                    <a ui-sref="manageProjectExisting({projectId: projectId, groupby: 'role'})">
+                        <button class="btn" ng-disabled="groupby=='role'">By Role</button>
+                    </a>
+                </div>
+                <div class="col-xs-1">
+                    <a ui-sref="manageProjectExisting({projectId: projectId, groupby: 'user'})"
+                    >
+                        <button class="btn" ng-disabled="groupby=='user'">By User</button>
+                    </a>
+                </div>
+                <div class="col-xs-4"></div>
+                <div class="col-xs-3">
+                    <button ng-show="isAdminForProject" class="btn  btn-danger"
+                            ng-disabled="numberSelectedUsers() == 0"
+                            ng-click="removeSelectedUsers()">
+                        Remove selected {{numberSelectedUsers()}} entry(s)
+                    </button>
+                </div>
+            </div>
+            <div class="row" ng-show="groupby=='role'">
+                <uib-accordion close-others="false">
+                    <uib-accordion-group is-open="true" ng-repeat="r in usersPerRole">
+                        <uib-accordion-heading>
+                            {{r.role}}
+                            <div class="btn-group">
+                                <a ui-sref="manageProjectNew({projectId: projectId, role: r.role})">
+                                    <button ng-show="isAdminForProject" class="btn"
+                                            ng-click="assignRoleToUsers($event, r.role)">Assign role to more
+                                        users
+                                    </button>
+                                </a>
+                            </div>
+                            <i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}">
+                            </i>
+                        </uib-accordion-heading>
+
+                        <div class="row" ng-repeat="u in r.users">
+                            <div class="col-xs-2">
+                                <input type="checkbox" ng-model="selectedForDelete[u.id+'|' + r.role].selected">
+                            </div>
+                            <div class="col-xs-8">
+                                ({{u.id}})
+                                {{u.attrs.cn}}
+                                {{u.attrs.sn}}
+                            </div>
+                            <div class="col-xs-2">
+                                <button ng-show="isAdminForProject"
+                                        class="btn btn-xs btn-danger"
+                                        ng-click="removeUser(u.id, r.role)">Remove
+                                </button>
+                            </div>
+                        </div>
+                    </uib-accordion-group>
+
+                </uib-accordion>
+            </div>
+
+
+            <div class="row" ng-show="groupby=='user'">
+                <uib-accordion close-others="false">
+                    <uib-accordion-group is-open="true" ng-repeat="rpu in rolesPerUser">
+                        <uib-accordion-heading>
+                            ({{rpu.user.id}})&nbsp;{{rpu.user.attrs.cn}}&nbsp;{{rpu.user.attrs.sn}}
+                            <i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}">
+                            </i>
+                            <div class="btn-group pull-right ">
+                                <button ng-show="isAdminForProject"
+                                        class="btn"
+                                        ng-click="assignRolesToUser($event, rpu.user.id)">Assign
+                                    more roles to
+                                    {{rpu.user.id}}
+                                </button>
+                            </div>
+
+
+                        </uib-accordion-heading>
+
+                        <div class="row" ng-repeat="r in rpu.roles">
+                            <div class="col-xs-2">
+                                <input type="checkbox" ng-model="selectedForDelete[rpu.user.id+'|' + r].selected">
+                            </div>
+                            <div class="col-xs-8">
+
+                                {{r}}
+                            </div>
+                            <div class="col-xs-2">
+                                <button ng-show="isAdminForProject"
+                                        class="btn btn-xs btn-danger"
+                                        ng-click="removeUser(rpu.user.id, r)">Remove
+                                </button>
+                            </div>
+                        </div>
+                    </uib-accordion-group>
+
+                </uib-accordion>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

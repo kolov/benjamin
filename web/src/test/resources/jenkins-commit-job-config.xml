@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<maven2-moduleset plugin="maven-plugin@2.10">
+    <actions/>
+    <description/>
+    <logRotator class="hudson.tasks.LogRotator"></logRotator>
+    <keepDependencies>false</keepDependencies>
+    <properties></properties>
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@2.3.5">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+            <hudson.plugins.git.UserRemoteConfig>
+                <url>
+                    https://jenkins_read@p-bitbucket.xxx.com:7999/scm/solo/sccm-manager.git
+                </url>
+                <credentialsId>c28b8e00-9268-4b82-94ce-e6d0ebdfa742</credentialsId>
+            </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+            <hudson.plugins.git.BranchSpec>
+                <name>*/develop</name>
+            </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions/>
+    </scm>
+    <canRoam>true</canRoam>
+    <disabled>false</disabled>
+    <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+    <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <jdk>IBM JDK 1.7</jdk>
+    <triggers>
+        <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.11.3">
+            <spec/>
+        </com.cloudbees.jenkins.GitHubPushTrigger>
+    </triggers>
+    <concurrentBuild>false</concurrentBuild>
+    <rootModule>
+        <groupId>com.myorg</groupId>
+        <artifactId>mymod</artifactId>
+    </rootModule>
+    <goals>clean deploy -s settings.xml</goals>
+    <mavenName>Maven 3.2.1</mavenName>
+    <aggregatorStyleBuild>true</aggregatorStyleBuild>
+    <incrementalBuild>false</incrementalBuild>
+    <ignoreUpstremChanges>false</ignoreUpstremChanges>
+    <archivingDisabled>false</archivingDisabled>
+    <siteArchivingDisabled>false</siteArchivingDisabled>
+    <fingerprintingDisabled>false</fingerprintingDisabled>
+    <resolveDependencies>false</resolveDependencies>
+    <processPlugins>false</processPlugins>
+    <mavenValidationLevel>-1</mavenValidationLevel>
+    <runHeadless>false</runHeadless>
+    <disableTriggerDownstreamProjects>false</disableTriggerDownstreamProjects>
+    <blockTriggerWhenBuilding>true</blockTriggerWhenBuilding>
+    <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+    <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+    <reporters>
+        <hudson.maven.reporters.MavenMailer>
+            <recipients>my.mail@google.com</recipients>
+            <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+            <sendToIndividuals>false</sendToIndividuals>
+            <perModuleEmail>false</perModuleEmail>
+        </hudson.maven.reporters.MavenMailer>
+    </reporters>
+    <publishers/>
+    <buildWrappers/>
+    <prebuilders/>
+    <postbuilders/>
+    <runPostStepsIfResult>
+        <name>FAILURE</name>
+        <ordinal>2</ordinal>
+        <color>RED</color>
+        <completeBuild>true</completeBuild>
+    </runPostStepsIfResult>
+</maven2-moduleset>

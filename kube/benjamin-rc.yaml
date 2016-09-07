@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: benjamin
+  name: benjamin-controller
+spec:
+  replicas: 1
+  selector:
+    name: benjamin
+  template:
+    metadata:
+      labels:
+        name: benjamin
+    spec:
+      containers:
+      - image: eu.gcr.io/wherecanigonow/benjamin
+        name: benjamin
+        env:
+          - name: SPRING_DATA_MONGODB_URI
+            value: mongodb://mongo:27017/benjamin
+        ports:
+        - containerPort: 8080
+          name: benjamin-server

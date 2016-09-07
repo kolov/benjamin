@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h3 class="modal-title">Register User</h3>
+</div>
+<div class="modal-body">
+
+    <table id="user-profile">
+        <tr>
+            <td>id</td>
+            <td>{{user.id}}</td>
+        </tr>
+        <tr>
+            <td>cn</td>
+            <td><input type="text" ng-model="user.attrs.cn"></td>
+        </tr>
+        <tr>
+            <td>sn</td>
+            <td><input type="text" ng-model="user.attrs.sn"></td>
+        </tr>
+        <tr>
+            <td>mail</td>
+            <td><input type="text" ng-model="user.attrs.mail"></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" ng-model="pw1"></td>
+        </tr>
+        <tr>
+            <td>Repeat password</td>
+            <td><input type="password" ng-model="pw2"></td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="insert()" ng-disabled="!dataComplete()">Insert</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

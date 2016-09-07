@@ -1,0 +1,6 @@
+*.iml
+.setting
+target
+.idea
+src/main/webapp/static/bower_components
+**/private.properties

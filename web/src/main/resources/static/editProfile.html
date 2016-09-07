@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h3 class="modal-title">Edit User Profile</h3>
+</div>
+<div class="modal-body">
+
+    <table id="user-profile">
+        <tr>
+            <td>id</td>
+            <td>{{user.id}}</td>
+        </tr>
+        <tr>
+            <td>cn</td>
+            <td><input type="text" ng-model="user.attrs.cn"></td>
+        </tr>
+        <tr>
+            <td>sn</td>
+            <td><input type="text" ng-model="user.attrs.sn"></td>
+        </tr>
+        <tr>
+            <td>mail</td>
+            <td><input type="text" ng-model="user.attrs.mail"></td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="update()" ng-disabled="!somethingChanged()">Update</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

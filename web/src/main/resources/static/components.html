@@ -1,0 +1,29 @@
+<div>
+    <div class="row">
+        <h3>Components</h3>
+    </div>
+    <div class="row" ng-show="components.length == 0">
+        No components yet. You may wish to import components from Sonar
+    </div>
+    <div class="row" ng-repeat="c in components">
+        <div class="col-xs-2">
+            <label for="{{c.key}}">{{c.key}}</label></div>
+        <div class="col-xs-2">
+            <input id="{{c.key}}" class="form-control" type="input" ng-model="c.labelsAsString"
+            ng-change="onLabelChange(c)">
+        </div>
+        <button class="btn" ng-click="update(c)" ng-disabled="labelUpdateDisabled(c)">Update</button>
+        <br/>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-9"></div>
+        <div class="col-xs-3">
+            <button class="btn" ng-click="refreshComponents()">Import from Sonar</button>
+        </div>
+    </div>
+
+
+</div>
+
+  
