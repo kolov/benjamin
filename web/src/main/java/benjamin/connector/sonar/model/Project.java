@@ -2,8 +2,10 @@ package benjamin.connector.sonar.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Document(indexName = "sonar")
 public class Project {
 
     private String id;

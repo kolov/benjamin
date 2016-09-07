@@ -3,15 +3,13 @@ package benjamin.controller;
 
 import benjamin.connector.sonar.Sonar5Connector;
 import benjamin.connector.sonar.SonarConnectorFactory;
+import benjamin.connector.sonar.SonarConnectorGeneric;
 import benjamin.connector.sonar.model.Component;
 import benjamin.connector.sonar.model.Metric;
 import benjamin.connector.sonar.model.Project;
 import benjamin.exception.ApplicationException;
 import benjamin.model.Settings;
-import benjamin.persistence.ComponentsRepository;
-import benjamin.persistence.MetricsRepository;
-import benjamin.persistence.ProjectsRepository;
-import benjamin.persistence.SettingsRepositoryExt;
+import benjamin.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -30,7 +28,10 @@ public class ComponentsController {
     private ComponentsRepository componentsRepository;
 
     @Autowired
-    private ProjectsRepository projectsRepository;
+    private ProjectsMongoRepository projectsMongoRepository;
+
+    @Autowired
+    private ProjectsElasticRepository projectsElasticRepository;
 
     @Autowired
     private MetricsRepository metricsRepository;
@@ -45,12 +46,11 @@ public class ComponentsController {
     private String coreMetrics;
 
 
-    private Sonar5Connector createSonarConnector() {
+    private SonarConnectorGeneric createSonarConnector() {
         final Settings settings = settingsRepositoryExt.getTheSettings();
         if (settings == null) {
             throw new ApplicationException("No Sonar settings");
         }
-
         return sonarConnectorFactory.createSonarConnector(settings);
     }
 
@@ -61,14 +61,12 @@ public class ComponentsController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(path = "/importFromSonar", method = RequestMethod.POST)
     @ResponseBody
     public String update() {
-        Sonar5Connector sonar5Connector = createSonarConnector();
-
-
-        updateSonarComponents(sonar5Connector);
-        updateMetrics(sonar5Connector);
+        SonarConnectorGeneric sonarConnector = createSonarConnector();
+        updateSonarComponents(sonarConnector);
+        // updateMetrics(sonarConnector);
 
         return "OK";
     }
@@ -81,13 +79,16 @@ public class ComponentsController {
     }
 
 
-    private void updateSonarComponents(Sonar5Connector sonar5Connector) {
-        Project[] projects = sonar5Connector.listProjects();
-        for (Project project : projects) {
-            projectsRepository.save(project);
-            List<Component> comps = sonar5Connector.queryComponentsOfProject(project.getKey(), coreMetrics);
-            comps.forEach(c -> componentsRepository.save(c));
-        }
+    private void updateSonarComponents(SonarConnectorGeneric sonarConnector) {
+        sonarConnector.init();
+        List<Project> projects = sonarConnector.listProjects();
+        // TODO: parallel
+        projects.stream().forEach(p -> projectsMongoRepository.save(p));
+        projects.stream().forEach(p -> projectsElasticRepository.save(p));
+
+        //List<Component> comps = sonar5Connector.queryComponentsOfProject(project.getKey(), coreMetrics);
+        //comps.forEach(c -> componentsRepository.save(c));
+
     }
 
 

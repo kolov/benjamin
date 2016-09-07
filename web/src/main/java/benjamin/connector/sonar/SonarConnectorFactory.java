@@ -10,12 +10,16 @@ public class SonarConnectorFactory {
     @Autowired
     private RestHelper restHelper;
 
-    public Sonar5Connector createSonarConnector(SonarSettings sonarSettings) {
-        return new Sonar5Connector(restHelper, sonarSettings);
+    public SonarConnectorGeneric createSonarConnector(SonarSettings sonarSettings) {
+        return new SonarConnectorGeneric(restHelper, sonarSettings);
     }
 
-    public Sonar5Connector createSonarConnector(String url, String username, String password) {
-        return new Sonar5Connector(restHelper, url, username, password);
+    public SonarConnectorGeneric createSonarConnector(String url, String username, String password) {
+        return new SonarConnectorGeneric(restHelper, url, username, password);
+    }
+
+    public Sonar5Connector createSonar5Connector(String url, String username, String password) {
+        return new Sonar5Connector(createSonarConnector(url, username, password));
     }
 
 }

@@ -26,13 +26,13 @@ umtModule.controller("ComponentsCtrl", function ($scope,
 
   $scope.labelUpdateDisabled = function (c) {
     return $scope.labelChanged[c.key] != true;
-  }
+  };
 
   fetchComponents();
 
-  $scope.refreshComponents = function () {
+  $scope.importFromSonar = function () {
     startSpinner();
-    componentsService.refresh().$promise.then(
+    componentsService.importFromSonar().$promise.then(
       function () {
         fetchComponents();
         stopSpinner();

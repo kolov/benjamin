@@ -53,7 +53,7 @@ public class SonarConnectorTestManual {
     @Test
     public void testGetJobs() {
         final Sonar5Connector sonar5Connector
-                = sonarConnectorFactory.createSonarConnector(sonarUrl, sonarUser, sonarPassword);
+                = sonarConnectorFactory.createSonar5Connector(sonarUrl, sonarUser, sonarPassword);
         sonar5Connector.listProjects();
     }
 

@@ -11,7 +11,6 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Component {
 
-
     private String key;
 
     private String scope;
