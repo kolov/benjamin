@@ -4,8 +4,8 @@ import benjamin.connector.common.RestHelper;
 import benjamin.connector.sonar.common.Paged;
 import benjamin.connector.sonar.model.Component;
 import benjamin.connector.sonar.model.Metric;
-import benjamin.connector.sonar.model.PagedComponents;
-import benjamin.connector.sonar.model.PagedMetrics;
+import benjamin.connector.sonar.model.PagedComponents5;
+import benjamin.connector.sonar.model.PagedMetrics5;
 import benjamin.connector.sonar.model.Project;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SonarConnector {
+public class Sonar5Connector {
 
     private static final String PATH_PROJECTS = "/api/projects";
     private static final String PATH_METRIX_SEARCH = "/api/metrics/search";
@@ -27,14 +27,14 @@ public class SonarConnector {
     private String url;
 
 
-    public SonarConnector(RestHelper restHelper, String url, String username, String password) {
+    public Sonar5Connector(RestHelper restHelper, String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;
         this.restHelper = restHelper;
     }
 
-    public SonarConnector(RestHelper restHelper, SonarSettings sonarsettings) {
+    public Sonar5Connector(RestHelper restHelper, SonarSettings sonarsettings) {
         this(restHelper,
             sonarsettings.getSonarUrl(),
             sonarsettings.getSonarUser(),
@@ -52,7 +52,7 @@ public class SonarConnector {
         String url = PATH_MEASURES_TREE + "?metricKeys=" + coreMetrics
             + "&baseComponentKey=" + projectKey
             + "&qualifiers=TRK,BRC";
-        return queryPaged(url, PagedComponents.class);
+        return queryPaged(url, PagedComponents5.class);
     }
 
     public Project[] listProjects() {
@@ -81,7 +81,7 @@ public class SonarConnector {
     }
 
     public List<Metric> listMetrics() {
-        return queryPaged(PATH_METRIX_SEARCH, PagedMetrics.class);
+        return queryPaged(PATH_METRIX_SEARCH, PagedMetrics5.class);
     }
 
 }

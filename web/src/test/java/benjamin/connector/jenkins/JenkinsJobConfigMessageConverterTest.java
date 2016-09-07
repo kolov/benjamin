@@ -49,8 +49,8 @@ public class JenkinsJobConfigMessageConverterTest {
         assertEquals(cfg.getScm().getClazz(), "hudson.plugins.git.GitSCM");
         assertNotNull(cfg.getScm().getUserRemoteConfigs());
         assertNotNull(cfg.getScm().getUserRemoteConfigs().getUserRemoteConfigList());
-        assertEquals(cfg.getScm().getUserRemoteConfigs().getUserRemoteConfigList()
-                .get(0).getUrl(), "https://jenkins_read@p-bitbucket.xxx.com:7999/scm/solo/sccm-manager.git");
+        assertEquals("https://jenkins@bitbucket.xxx.com:7999/some/module.git",
+                cfg.getScm().getUserRemoteConfigs().getUserRemoteConfigList().get(0).getUrl().trim());
 
 
         server.verify();

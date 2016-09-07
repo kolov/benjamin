@@ -10,7 +10,7 @@
         <userRemoteConfigs>
             <hudson.plugins.git.UserRemoteConfig>
                 <url>
-                    https://jenkins_read@p-bitbucket.xxx.com:7999/scm/solo/sccm-manager.git
+                    https://jenkins@bitbucket.xxx.com:7999/some/module.git
                 </url>
                 <credentialsId>c28b8e00-9268-4b82-94ce-e6d0ebdfa742</credentialsId>
             </hudson.plugins.git.UserRemoteConfig>

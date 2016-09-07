@@ -35,7 +35,7 @@ public class SonarConnectorTestManual {
     private RestHelper restHelper;
 
     @Value("${SONAR_PASSWORD}")
-    private String sonarPassowrd;
+    private String sonarPassword;
 
     @Value("${SONAR_URL}")
     private String sonarUrl;
@@ -52,9 +52,9 @@ public class SonarConnectorTestManual {
 
     @Test
     public void testGetJobs() {
-        final SonarConnector sonarConnector
-                = sonarConnectorFactory.createSonarConnector(sonarUrl, sonarUser, sonarPassowrd);
-        sonarConnector.listProjects();
+        final Sonar5Connector sonar5Connector
+                = sonarConnectorFactory.createSonarConnector(sonarUrl, sonarUser, sonarPassword);
+        sonar5Connector.listProjects();
     }
 
 }

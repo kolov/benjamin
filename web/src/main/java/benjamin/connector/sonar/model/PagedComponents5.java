@@ -3,7 +3,7 @@ package benjamin.connector.sonar.model;
 
 import benjamin.connector.sonar.common.PagedEncapsed;
 
-public class PagedComponents extends PagedEncapsed<Component> {
+public class PagedComponents5 extends PagedEncapsed<Component> {
 
     private Component baseComponent;
     private Component[] components;

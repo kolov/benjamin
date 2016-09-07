@@ -1,0 +1,16 @@
+[
+  {
+    "id": "68870",
+    "k": "com.myorg.zyz.genericcomponents:AFilter",
+    "nm": "SomeName",
+    "sc": "PRJ",
+    "qu": "TRK"
+  },
+  {
+    "id": "86204",
+    "k": "com.myorg.forrest.wis:wi-coverview",
+    "nm": "SomeOtherName",
+    "sc": "PRJ",
+    "qu": "TRK"
+  }
+]

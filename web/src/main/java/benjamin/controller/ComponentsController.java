@@ -1,7 +1,7 @@
 package benjamin.controller;
 
 
-import benjamin.connector.sonar.SonarConnector;
+import benjamin.connector.sonar.Sonar5Connector;
 import benjamin.connector.sonar.SonarConnectorFactory;
 import benjamin.connector.sonar.model.Component;
 import benjamin.connector.sonar.model.Metric;
@@ -45,7 +45,7 @@ public class ComponentsController {
     private String coreMetrics;
 
 
-    private SonarConnector createSonarConnector() {
+    private Sonar5Connector createSonarConnector() {
         final Settings settings = settingsRepositoryExt.getTheSettings();
         if (settings == null) {
             throw new ApplicationException("No Sonar settings");
@@ -64,28 +64,28 @@ public class ComponentsController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public String update() {
-        SonarConnector sonarConnector = createSonarConnector();
+        Sonar5Connector sonar5Connector = createSonarConnector();
 
 
-        updateSonarComponents(sonarConnector);
-        updateMetrics(sonarConnector);
+        updateSonarComponents(sonar5Connector);
+        updateMetrics(sonar5Connector);
 
         return "OK";
     }
 
-    private void updateMetrics(SonarConnector sonarConnector) {
-        List<Metric> metrics = sonarConnector.listMetrics();
+    private void updateMetrics(Sonar5Connector sonar5Connector) {
+        List<Metric> metrics = sonar5Connector.listMetrics();
         for (Metric metric : metrics) {
             metricsRepository.save(metric);
         }
     }
 
 
-    private void updateSonarComponents(SonarConnector sonarConnector) {
-        Project[] projects = sonarConnector.listProjects();
+    private void updateSonarComponents(Sonar5Connector sonar5Connector) {
+        Project[] projects = sonar5Connector.listProjects();
         for (Project project : projects) {
             projectsRepository.save(project);
-            List<Component> comps = sonarConnector.queryComponentsOfProject(project.getKey(), coreMetrics);
+            List<Component> comps = sonar5Connector.queryComponentsOfProject(project.getKey(), coreMetrics);
             comps.forEach(c -> componentsRepository.save(c));
         }
     }

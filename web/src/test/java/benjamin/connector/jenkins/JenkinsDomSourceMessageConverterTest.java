@@ -28,7 +28,7 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource(locations = "jenkins-converters-tests.properties")
+@TestPropertySource(locations = "/converters-tests.properties")
 @ContextConfiguration(classes = {ApplicationConfiguration.class, JenkinsConnectorFactory.class, RestHelper.class})
 public class JenkinsDomSourceMessageConverterTest {
 
