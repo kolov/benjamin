@@ -2,7 +2,7 @@ package benjamin.connector.jenkins;
 
 
 import benjamin.ApplicationConfiguration;
-import benjamin.connector.LoggingRequestInterceptor;
+import benjamin.connector.common.LoggingRequestInterceptor;
 import benjamin.connector.common.RestHelper;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +13,7 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +25,14 @@ import java.util.List;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(locations = {"/private.properties", "/converters-tests.properties"})
-@ContextConfiguration(classes = {ApplicationConfiguration.class, JenkinsConnectorFactory.class, RestHelper.class})
+@ContextConfiguration(classes = {ApplicationConfiguration.class, RestHelper.class})
 public class JenkinsConnectorTestManual {
 
     @Autowired
-    private JenkinsConnectorFactory jenkinsConnectorFactory;
+    private RestHelper restHelper;
 
     @Autowired
-    private RestHelper restHelper;
+    private RestTemplate restTemplate;
 
     @Value("${JENKINS_TOKEN}")
     private String jenkinsApiToken;
@@ -42,26 +43,27 @@ public class JenkinsConnectorTestManual {
     @Value("${JENKINS_USER}")
     private String jenkinsUser;
 
+    private JenkinsConnector jenkinsConnector;
+
     @Before
     public void init() {
 
+        jenkinsConnector =
+                JenkinsConnector.build(restHelper, restTemplate,
+                        jenkinsUrl, jenkinsUser, jenkinsApiToken);
+
         List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
         interceptors.add(new LoggingRequestInterceptor());
-        restHelper.setInterceptors(interceptors);
+        jenkinsConnector.getRestTemplate().setInterceptors(interceptors);
     }
 
     @Test
     public void testGetJobs() {
-        final JenkinsConnector jenkinsConnector =
-                jenkinsConnectorFactory.createJenkinsConnector(
-                        jenkinsUrl, jenkinsUser, jenkinsApiToken);
         jenkinsConnector.listJobs();
     }
 
     @Test
     public void getJobConfig() {
-        final JenkinsConnector jenkinsConnector = jenkinsConnectorFactory.createJenkinsConnector(
-                jenkinsUrl, jenkinsUser, jenkinsApiToken);
         jenkinsConnector.getJobConfig("benjamin-commit");
 
     }

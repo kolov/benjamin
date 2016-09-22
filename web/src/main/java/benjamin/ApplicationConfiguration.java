@@ -60,23 +60,4 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
         return xmlConverter;
     }
 
-
-//
-//    @Bean
-//    public HttpMessageConverter<Object> xstreamHttpMessageConverter() {
-//        MarshallingHttpMessageConverter xmlConverter =
-//                new MarshallingHttpMessageConverter();
-//
-//        XStreamMarshaller xstreamMarshaller = new XStreamMarshaller();
-//        xmlConverter.setMarshaller(xstreamMarshaller);
-//        xmlConverter.setUnmarshaller(xstreamMarshaller);
-//        List<MediaType> mediaTypes = new ArrayList<>();
-//        mediaTypes.add(new MediaType("application", "xml"));
-//        xmlConverter.setSupportedMediaTypes(mediaTypes);
-//        Map<String, Class<?>> aliases = new HashMap<>();
-//        aliases.put("maven2-moduleset", JenkinsJobConfig.class);
-//        xstreamMarshaller.setAliases(aliases);
-//
-//        return xmlConverter;
-//    }
 }

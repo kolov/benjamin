@@ -4,6 +4,7 @@ import benjamin.connector.sonar.common.Paged;
 import benjamin.connector.sonar.model.*;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,9 +16,9 @@ public class Sonar5Connector {
     private static final String PATH_METRIX_SEARCH = "/api/metrics/search";
     private static final String PATH_MEASURES_TREE = "/api/measures/component_tree";
 
-    private final SonarConnectorGeneric sonarConnectorGeneric;
+    private SonarConnectorImpl sonarConnectorGeneric;
 
-    public Sonar5Connector(SonarConnectorGeneric sonarConnectorGeneric) {
+    public Sonar5Connector(SonarConnectorImpl sonarConnectorGeneric) {
         this.sonarConnectorGeneric = sonarConnectorGeneric;
     }
 
@@ -37,7 +38,6 @@ public class Sonar5Connector {
     }
 
     private <T, PT extends Paged<T>> List<T> queryPaged(String url, Class<PT> pagedClass) {
-
         final List<T> result = new ArrayList<>();
         boolean finished = false;
         for (int p = 1; !finished; p++) {
@@ -58,4 +58,7 @@ public class Sonar5Connector {
         return queryPaged(PATH_METRIX_SEARCH, PagedMetrics5.class);
     }
 
+    public RestTemplate getRestTemplate() {
+        return sonarConnectorGeneric.getRestTemplate();
+    }
 }

@@ -11,9 +11,9 @@ public class Sonar4Connector {
 
     private static final String PATH_PROJECTS = "/api/projects";
 
-    private final SonarConnectorGeneric sonarConnectorGeneric;
+    private final SonarConnectorImpl sonarConnectorGeneric;
 
-    public Sonar4Connector(SonarConnectorGeneric sonarConnectorGeneric) {
+    public Sonar4Connector(SonarConnectorImpl sonarConnectorGeneric) {
         this.sonarConnectorGeneric = sonarConnectorGeneric;
     }
 

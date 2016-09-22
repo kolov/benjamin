@@ -26,17 +26,19 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(locations = "/converters-tests.properties")
-@ContextConfiguration(classes = {ApplicationConfiguration.class, JenkinsConnectorFactory.class, RestHelper.class})
+@ContextConfiguration(classes = {ApplicationConfiguration.class, RestHelper.class})
 public class JenkinsJobConfigMessageConverterTest {
 
 
     @Autowired
     private RestHelper restHelper;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Test
     public void testRestTemplate() throws Exception {
 
-        RestTemplate restTemplate = restHelper.getRestTemplate();
         MockRestServiceServer server = MockRestServiceServer.createServer(restTemplate);
 
         server.expect(requestTo("/")).andExpect(method(HttpMethod.GET))

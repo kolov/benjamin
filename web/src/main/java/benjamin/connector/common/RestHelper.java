@@ -2,25 +2,17 @@ package benjamin.connector.common;
 
 import benjamin.exception.ApplicationException;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 @Component
 public class RestHelper {
 
-    @Autowired
-    private List<HttpMessageConverter<?>> messageConverters;
-    private List<ClientHttpRequestInterceptor> interceptors;
 
     public RequestEntity makeRequestEntity(final String url, String path, final String username, final String
             password) {
@@ -75,15 +67,4 @@ public class RestHelper {
         }
     }
 
-    public RestTemplate getRestTemplate() {
-        RestTemplate result = new RestTemplate(messageConverters);
-        if (interceptors != null) {
-            result.setInterceptors(interceptors);
-        }
-        return result;
-    }
-
-    public void setInterceptors(List<ClientHttpRequestInterceptor> interceptors) {
-        this.interceptors = interceptors;
-    }
 }

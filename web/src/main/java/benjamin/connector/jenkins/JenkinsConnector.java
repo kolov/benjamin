@@ -3,29 +3,25 @@ package benjamin.connector.jenkins;
 import benjamin.connector.common.RestHelper;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 public class JenkinsConnector {
 
     private static final String PATH_JOBS = "/api/json";
 
-    private final RestHelper restHelper;
 
+    private RestTemplate restTemplate;
+    private RestHelper restHelper;
     private String username;
     private String apiToken;
+
+
     private String url;
 
-    public JenkinsConnector(RestHelper restHelper, String url, String username, String apiToken) {
-        this.restHelper = restHelper;
+    private JenkinsConnector(RestHelper restHelper, RestTemplate restTemplate, String url, String username, String apiToken) {
         this.url = url;
         this.username = username;
         this.apiToken = apiToken;
-    }
-
-    public JenkinsConnector(RestHelper restHelper, JenkinsSettings jenkinsSettings) {
-        this.restHelper = restHelper;
-        this.url = jenkinsSettings.getJenkinsUrl();
-        this.username = jenkinsSettings.getJenkinsUser();
-        this.apiToken = jenkinsSettings.getJenkinsApiToken();
     }
 
 
@@ -36,16 +32,24 @@ public class JenkinsConnector {
     public JenkinsJobConfig getJobConfig(String jobname) {
 
         final RequestEntity re = makeRequestEntity(url + "/job/" + jobname + "/config.xml");
-        final ResponseEntity<JenkinsJobConfig> resp = restHelper.getRestTemplate().exchange(re,
-            JenkinsJobConfig.class);
+        final ResponseEntity<JenkinsJobConfig> resp = restTemplate.exchange(re,
+                JenkinsJobConfig.class);
         return resp.getBody();
     }
 
     public JenkinsNode listJobs() {
         final RequestEntity<JenkinsNode> re = makeRequestEntity(url + PATH_JOBS);
-        final ResponseEntity<JenkinsNode> resp = restHelper.getRestTemplate().exchange(re,
-            JenkinsNode.class);
+        final ResponseEntity<JenkinsNode> resp = restTemplate.exchange(re,
+                JenkinsNode.class);
         return resp.getBody();
     }
 
+    public RestTemplate getRestTemplate() {
+        return restTemplate;
+    }
+
+    public static JenkinsConnector build(RestHelper restHelper, RestTemplate restTemplate, String url, String username, String apiToken) {
+        JenkinsConnector connector = new JenkinsConnector(restHelper, restTemplate, url, username, apiToken);
+        return connector;
+    }
 }
