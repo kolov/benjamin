@@ -12,6 +12,7 @@ import benjamin.persistence.*;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,20 +78,19 @@ public class ComponentsController {
     }
 
 
+    @Autowired
+    private TaskExecutor taskExecutor;
+
     private void updateSonarComponents(SonarConnectorImpl sonarConnector) {
         sonarConnector.init();
         List<Project> projects = sonarConnector.listProjects();
-        // TODO: parallel
-        projects.stream().forEach(p -> projectsMongoRepository.save(p));
-        projects.stream().forEach(p -> projectsMongoRepository.save(p));
+
+        taskExecutor.execute(() -> projects.stream().forEach(p -> projectsMongoRepository.save(p)));
+        taskExecutor.execute(() -> projects.stream().forEach(p -> projectsElasticRepository.save(p)));
 
         projects.stream()
                 .filter(p -> p.getQualifier() == "TRK")
                 .forEach(p -> getExtendedProjecInfo(p));
-
-        //List<Component> comps = sonar5Connector.queryComponentsOfProject(project.getKey(), coreMetrics);
-        //comps.forEach(c -> componentsRepository.save(c));
-
     }
 
     private void getExtendedProjecInfo(Project p) {

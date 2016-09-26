@@ -65,7 +65,6 @@ public class JenkinsConnectorTestManual {
     @Test
     public void getJobConfig() {
         jenkinsConnector.getJobConfig("benjamin-commit");
-
     }
 
 }
